@@ -14,6 +14,8 @@ on:
     branches: [ "main" ]
 env:
   GRADLE_VERSION: '6.0'
+  JAVA_VERSION: '8'
+  JAVA_VERSION_NAME: '1.8'
 
 jobs:
   build:
@@ -24,10 +26,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK 1.8
+    - name: Set up JDK '${{ env.JAVA_VERSION_NAME }}'
       uses: actions/setup-java@v4
       with:
-        java-version: '8'
+        java-version: '${{ env.JAVA_VERSION }}'
         distribution: 'temurin'
 
     # Configure Gradle for optimal use in GiHub Actions, including caching of downloaded dependencies.
@@ -57,10 +59,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK 17
+    - name: Set up JDK ${{ env.JAVA_VERSION_NAME }}
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '${{ env.JAVA_VERSION }}'
         distribution: 'temurin'
 
     # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.

@@ -49,7 +49,7 @@ jobs:
         gradle-version: ${{ env.GRADLE_VERSION}}
     
     - name: Build with Gradle ${{ env.GRADLE_VERSION}}
-      run: gradle build --stacktrace --debug
+      run: gradle build
 
   dependency-submission:
 

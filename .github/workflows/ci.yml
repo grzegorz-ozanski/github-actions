@@ -20,8 +20,10 @@ env:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-${{matrix.version}}
+    strategy:
+      matrix:
+        version: [latest]
     permissions:
       contents: read
 
@@ -55,8 +57,8 @@ jobs:
     - name: Build with Gradle ${{ env.GRADLE_VERSION}}
       run: ./gradlew build
 
-    - name: Inspect build artifacts
-      run: ls -laR . -I README.md -I src -I Dockerfile -I ".git*" -I "*gradle*"
+    # - name: Inspect build artifacts
+      # run: ls -laR . -I README.md -I src -I Dockerfile -I ".git*" -I "*gradle*"
 
     # - name: Build and Push Docker Image
       # uses: mr-smithers-excellent/docker-build-push@v6
@@ -69,6 +71,7 @@ jobs:
     
     - name: Build and Push Docker Image manually
       run: |
+        find build/
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker build -f Dockerfile . -t greggorgmailcom/github-actions-tutorial:latest
         docker push greggorgmailcom/github-actions-tutorial:latest

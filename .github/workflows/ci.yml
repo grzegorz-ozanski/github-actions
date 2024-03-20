@@ -20,7 +20,10 @@ env:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
     permissions:
       contents: read
 
@@ -55,7 +58,6 @@ jobs:
       run: ./gradlew build
 
   dependency-submission:
-    needs: build
 
     runs-on: ubuntu-latest
     permissions:

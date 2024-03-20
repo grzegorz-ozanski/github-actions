@@ -60,15 +60,21 @@ jobs:
     - name: Inspect build artifacts
       run: ls -laR . -I README.md -I src -I Dockerfile -I ".git*" -I "*gradle*"
 
-    - name: Build and Push Docker Image
-      uses: mr-smithers-excellent/docker-build-push@v6
-      with:
-        directory: .
-        image: greggorgmailcom/github-actions-tutorial
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+    # - name: Build and Push Docker Image
+      # uses: mr-smithers-excellent/docker-build-push@v6
+      # with:
+        # directory: .
+        # image: greggorgmailcom/github-actions-tutorial
+        # registry: docker.io
+        # username: ${{ secrets.DOCKER_USERNAME }}
+        # password: ${{ secrets.DOCKER_PASSWORD }}
     
+    - name: Build and Push Docker Image manually
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker build -f Dockerfile . -t greggorgmailcom/github-actions-tutorial:latest
+        docker push greggorgmailcom/github-actions-tutorial:latest
+
   dependency-submission:
     runs-on: ubuntu-latest
     permissions:

@@ -72,9 +72,8 @@ jobs:
     - name: Build and Push Docker Image manually
       run: |
         find build/
-        tar -czf build.tar.gz build/ Dockerfile
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build -t greggorgmailcom/github-actions-tutorial:latest - < build.tar.gz
+        docker build . -f Dockerfile -t greggorgmailcom/github-actions-tutorial:latest
         docker push greggorgmailcom/github-actions-tutorial:latest
 
   dependency-submission:

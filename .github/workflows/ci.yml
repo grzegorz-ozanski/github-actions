@@ -57,6 +57,9 @@ jobs:
     - name: Build with Gradle ${{ env.GRADLE_VERSION}}
       run: ./gradlew build
 
+    - name: Inspect build artifacts
+      run: ls -laR .
+
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v6
       with:
